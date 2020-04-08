@@ -1,0 +1,16 @@
+.header span {
+    margin: auto;
+    font-size: 35px;
+    color: white;
+}
+
+.header {
+    height: 100px;
+    margin-top: 10px;
+    background-color: dodgerblue;
+}
+
+.container {
+    border: 1px lightgrey groove;
+    box-shadow: 2px 2px 5px gray;
+}

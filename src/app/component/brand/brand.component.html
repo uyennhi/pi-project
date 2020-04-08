@@ -1,0 +1,107 @@
+<!-- Navigation bar-->
+<app-nav-bar ></app-nav-bar>
+
+<!-- Search brand -->
+<div class="button-search">
+    <button type="submit" class="btn btn-primary" >
+        Search
+    </button>
+</div>
+<div class="name-search">
+    <div class="form-group">
+        <input type="text" id="inputState" class="form-control" placeholder="Brand name" >
+    </div>
+</div>
+
+<!-- Button create -->
+<div class="bt-create" >
+    <button class="bt-create" mat-stroked-button color="primary">
+        
+        Create
+    </button>
+</div>
+
+<div class="example-container ">
+    <mat-table #table [dataSource]="dataSource" matSort>
+        <!-- brandId Column -->
+        <ng-container matColumnDef="brandId">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Brand ID </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <span class="mobile-label">ID:</span> {{element.brandId}}
+            </mat-cell>
+        </ng-container>
+
+        <!-- brandName Column -->
+        <ng-container matColumnDef="brandName">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Brand Name </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <span class="mobile-label">BRAND NAME:</span> {{element.brandName}}
+            </mat-cell>
+        </ng-container>
+
+        <!-- logo Column -->
+        <ng-container matColumnDef="logo">
+            <mat-header-cell *matHeaderCellDef> Logo </mat-header-cell>
+            <mat-cell class="logo-show" *matCellDef="let element" >
+                <span class="mobile-label">LOGO:</span>
+                <div class="img-display" matTooltip="Click to show logo" matTooltipPosition="after">
+                    <img src="../../../assets/logo/{{ element.logo }}" class="img">
+                </div>
+            </mat-cell>
+        </ng-container>
+
+        <!-- description Column -->
+        <ng-container matColumnDef="description">
+            <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <span class="mobile-label">DESCRIPTION:</span> {{element.description}}
+            </mat-cell>
+        </ng-container>
+
+        <!-- Button action -->
+        <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef></mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                <span class="mobile-label"></span>
+               <button  mat-icon-button color="primary" *ngIf="flagAction">
+                    <mat-icon>launch</mat-icon>
+                </button>
+               <button  mat-icon-button color="warn" *ngIf="flagAction">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+</div><br>
+<div style="text-align: center; color: red" *ngIf="flagServerError">Server error</div>
+
+<!-- Pagination -->
+<ul class="pagination pagination-sm justify-content-end">
+    <li class="page-item" [ngClass]="{'disabled': currentPage === 0}">
+        <button class="page-link" matTooltip="First page" (click)="setPageChange(0)">
+            <<
+        </button>
+    </li>
+    <li class="page-item" [ngClass]="{'disabled': currentPage === 0}">
+        <button class="page-link" matTooltip="Previous page" (click)="setPageChange(currentPage - 1)">
+            <
+        </button>
+    </li>
+    <li class="page-item" *ngFor="let page of pageNumbersList">
+        <button class="page-link" [ngClass]="{'pager': page - 1 === currentPage}" matTooltip="Page {{ page }}" (click)="setPageChange(page - 1)">
+            {{ page }}
+        </button>
+    </li>
+    <li class="page-item" [ngClass]="{'disabled': currentPage === totalPage - 1}">
+        <button class="page-link" matTooltip="Next page" (click)="setPageChange(currentPage + 1)">
+            >
+        </button>
+    </li>
+    <li class="page-item" [ngClass]="{'disabled': currentPage === totalPage - 1}">
+        <button class="page-link" matTooltip="Last page" (click)="setPageChange(totalPage - 1)">
+            >>
+        </button>
+    </li>
+</ul>
