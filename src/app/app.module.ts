@@ -8,7 +8,7 @@ import {MatSortModule} from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import {MatIconModule} from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
-
+import {MatButtonModule} from '@angular/material/button';
 
 import {MatTableModule} from '@angular/material/table';
 import { AppRoutingModule } from './app-routing.module';
@@ -37,7 +37,8 @@ import { ProductComponent } from './component/product/product.component';
     MatTableModule,
     MatSortModule,
     MatIconModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatButtonModule
   ],
   providers: [
     BrandService

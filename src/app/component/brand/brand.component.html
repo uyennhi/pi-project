@@ -15,7 +15,7 @@
 
 <!-- Button create -->
 <div class="bt-create" >
-    <button class="bt-create" mat-stroked-button color="primary">
+    <button class="bt-create" mat-raised-button color="primary">
         
         Create
     </button>
@@ -63,11 +63,11 @@
             <mat-header-cell *matHeaderCellDef></mat-header-cell>
             <mat-cell *matCellDef="let row">
                 <span class="mobile-label"></span>
-               <button  mat-icon-button color="primary" *ngIf="flagAction">
-                    <mat-icon>launch</mat-icon>
+               <button  mat-button color="primary" *ngIf="flagAction">
+                    <mat-icon color="primary">done</mat-icon>
                 </button>
-               <button  mat-icon-button color="warn" *ngIf="flagAction">
-                    <mat-icon>delete</mat-icon>
+               <button  mat-button color="warn" *ngIf="flagAction">
+                    <mat-icon color="warn">restore_from_trash</mat-icon>
                 </button>
             </mat-cell>
         </ng-container>

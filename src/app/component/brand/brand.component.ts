@@ -7,6 +7,7 @@ import { messageServerError } from '../common/constrains';
 import {MatTableModule} from '@angular/material/table';
 import {MatSort} from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import {MatButtonModule} from '@angular/material/button';
 @Component({
   selector: 'app-brand',
   templateUrl: './brand.component.html',
