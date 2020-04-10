@@ -61,6 +61,7 @@ export class BrandComponent implements OnInit {
         this.dataSource = new MatTableDataSource(this.brandsList),
         this.dataSource.sort = this.sort
       },
+        
         // If server error
         error => {
           this.flagServerError = true;
