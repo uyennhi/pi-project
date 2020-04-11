@@ -66,7 +66,7 @@
                <button  mat-button color="primary" *ngIf="flagAction">
                     <mat-icon color="primary">done</mat-icon>
                 </button>
-               <button  mat-button color="warn" *ngIf="flagAction">
+               <button (click)="deleteBrand(row)" mat-button color="warn" *ngIf="flagAction">
                     <mat-icon color="warn">restore_from_trash</mat-icon>
                 </button>
             </mat-cell>

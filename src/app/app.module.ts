@@ -9,6 +9,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import {MatIconModule} from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatButtonModule} from '@angular/material/button';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 import {MatTableModule} from '@angular/material/table';
 import { AppRoutingModule } from './app-routing.module';
@@ -16,15 +18,18 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavBarComponent } from './component/common/nav-bar/nav-bar.component';
 import { BrandComponent } from './component/brand/brand.component';
-import { BrandService } from './Service/brand.service';
+import { BrandService } from './service/brand.service';
 import { ProductComponent } from './component/product/product.component';
+import { DialogDeleteComponent } from './component/common/dialog-delete/dialog-delete.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavBarComponent,
     BrandComponent,
-    ProductComponent
+    ProductComponent,
+    DialogDeleteComponent
+
   ],
   imports: [
     BrowserModule,
@@ -38,7 +43,9 @@ import { ProductComponent } from './component/product/product.component';
     MatSortModule,
     MatIconModule,
     MatTooltipModule,
-    MatButtonModule
+    MatButtonModule,
+    MatDialogModule,
+    MatSnackBarModule
   ],
   providers: [
     BrandService

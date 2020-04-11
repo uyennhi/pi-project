@@ -1,0 +1,22 @@
+.no {
+    width: 70px;
+    margin-left: 20px;
+}
+
+.bt-confirm {
+    float: right;
+}
+
+.yes {
+    width: 70px;
+}
+
+@media screen and (max-width: 600px) {
+    .delete {
+        font-size: 13px;
+    }
+    .delete button {
+        width: 63px;
+        font-size: 13px;
+    }
+}

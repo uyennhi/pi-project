@@ -1,1 +1,176 @@
-<p>hello product</p>
+<app-nav-bar ></app-nav-bar>
+
+<!-- Search bar -->
+<div class="container-fluid bg-light">
+    <form [formGroup]="formSearch">
+        <div class="row align-items-center justify-content-center">
+            <!-- Field search product name -->
+            <div class="col-md-2 pt-3">
+                <div class="form-group ">
+                    <input type="text" id="inputState" class="form-control" placeholder="Product name" formControlName="productName">
+                </div>
+            </div>
+
+            <!-- Select search brand name -->
+            <div class="col-md-2 pt-3">
+                <div class="form-group">
+                    <select id="inputState" class="form-control" formControlName="brandName">
+                        <option value="">Brand name</option>
+                        <option *ngFor="let brandName of brandNamesList" [value]="brandName">
+                                {{brandName}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Select search min price -->
+            <div class="col-md-2 pt-3">
+                <div class="form-group">
+                    <select id="inputState" class="form-control" formControlName="priceFrom">
+                        <option value="0">Price from</option>
+                        <option value="1000000">{{1000000 | currency:"VND":"symbol"}}</option>
+                        <option value="3000000">{{3000000 | currency:"VND":"symbol"}}</option>
+                        <option value="6000000">{{6000000 | currency:"VND":"symbol"}}</option>
+                        <option value="10000000">{{10000000 | currency:"VND":"symbol"}}</option>
+                        <option value="20000000">{{20000000 | currency:"VND":"symbol"}}</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Select search max price -->
+            <div class="col-md-2 pt-3">
+                <div class="form-group">
+                    <select id="inputState" class="form-control" formControlName="priceTo">
+                        <option value="0">Price to</option>
+                        <option value="1000000">{{1000000 | currency:"VND":"symbol"}}</option>
+                        <option value="3000000">{{3000000 | currency:"VND":"symbol"}}</option>
+                        <option value="6000000">{{6000000 | currency:"VND":"symbol"}}</option>
+                        <option value="10000000">{{10000000 | currency:"VND":"symbol"}}</option>
+                        <option value="20000000">{{20000000 | currency:"VND":"symbol"}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-primary btn-block" id="inputState" (click)="searchProductsList(formSearch.value)">Search</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Button add product -->
+<div class="bt-create" *ngIf="flagAction">
+    <button mat-stroked-button color="primary">
+        <mat-icon>create</mat-icon>
+        Create
+    </button>
+</div>
+
+<div class="example-container mat-elevation-z8">
+    <!-- Table product -->
+    <mat-table #table [dataSource]="dataSource" matSort>
+        <!-- productId Column -->
+        <ng-container matColumnDef="productId">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Product ID </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <span class="mobile-label">ID:</span> {{element.productId}}
+            </mat-cell>
+        </ng-container>
+
+        <!-- productName Column -->
+        <ng-container matColumnDef="productName">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Product Name </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="product-name">
+                <span class="mobile-label">PRODUCT NAME:</span> {{element.productName}}
+            </mat-cell>
+        </ng-container>
+
+        <!-- quantity Column -->
+        <ng-container matColumnDef="quantity">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Quantity </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <span class="mobile-label">QUANTITY:</span> {{element.quantity}}
+            </mat-cell>
+        </ng-container>
+
+        <!-- price Column -->
+        <ng-container matColumnDef="price">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Price </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <span class="mobile-label">PRICE:</span> {{element.price | currency:"VND":"symbol"}}
+            </mat-cell>
+        </ng-container>
+
+        <!-- brandName Column -->
+        <ng-container matColumnDef="brandEntity">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Brand Name </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <span class="mobile-label">BRAND NAME:</span> {{element.brandEntity.brandName}}
+            </mat-cell>
+        </ng-container>
+
+        <!-- saleDate Column -->
+        <ng-container matColumnDef="saleDate">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Open Date Sale </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <span class="mobile-label">DATE SALE:</span> {{element.saleDate}}
+            </mat-cell>
+        </ng-container>
+
+        <!-- image Column -->
+        <ng-container matColumnDef="image">
+            <mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="image-show">
+                <span class="mobile-label">IMAGE:</span>
+                <div class="img-display"  matTooltip="Click to show image" matTooltipPosition="after">
+                    <img src="../../assets/image/{{ element.image }}" class="img">
+                </div>
+            </mat-cell>
+        </ng-container>
+
+        <!-- Prduct actions -->
+        <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef></mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                <span class="mobile-label"></span>
+                <button mat-icon-button  color="primary" *ngIf="flagAction">
+                    <mat-icon>launch</mat-icon>
+                </button>
+                <button mat-icon-button  color="warn" *ngIf="flagAction">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+</div><br>
+<div style="text-align: center; color: red" *ngIf="flagServerError">Server error</div>
+
+<!-- Pagination -->
+<ul class="pagination pagination-sm justify-content-end">
+    <li class="page-item" [ngClass]="{'disabled': currentPage === 0}">
+        <button class="page-link" matTooltip="First page" (click)="setPageChange(0)">
+            <<
+        </button>
+    </li>
+    <li class="page-item" [ngClass]="{'disabled': currentPage === 0}">
+        <button class="page-link" matTooltip="Previous page" (click)="setPageChange(currentPage - 1)">
+            <
+        </button>
+    </li>
+    <li class="page-item" *ngFor="let page of pageNumbersList">
+        <button class="page-link" [ngClass]="{'pager': page -1 === currentPage}" matTooltip="Page {{ page }}" (click)="setPageChange(page - 1)">
+            {{ page }}
+        </button>
+    </li>
+    <li class="page-item" [ngClass]="{'disabled': currentPage === totalPage - 1}">
+        <button class="page-link" matTooltip="Next page" (click)="setPageChange(currentPage + 1)">
+            >
+        </button>
+    </li>
+    <li class="page-item" [ngClass]="{'disabled': currentPage === totalPage - 1}">
+        <button class="page-link" matTooltip="Last page" (click)="setPageChange(totalPage - 1)">
+            >>
+        </button>
+    </li>
+</ul>
