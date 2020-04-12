@@ -15,6 +15,7 @@ export class AddBrandComponent implements OnInit {
 
  formEdit: FormGroup;
   logoName: string;
+  brandNameChecker :string;
 
   // Set default value variable
   flagShowLogo = false;

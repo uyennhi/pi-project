@@ -9,7 +9,7 @@
                     <!-- Field brand name -->
                     <div class="form-group">
                         <label>Brand name <small style="color: red">(*)</small></label>
-                        <input type="text" class="form-control" placeholder="Enter brand name" formControlName="brandName"  >
+                        <input type="text" class="form-control" placeholder="Enter brand name" formControlName="brandName" (keyup)="checkDuplicatedBrandName(brandNameChecker)" [(ngModel)]="brandNameChecker" >
                         <small class="required" *ngIf="flagDuplicatedbrandName">Duplicated brand name.</small>
                         <small class="required" *ngIf="formEdit.get('brandName').errors?.required && flagRequired">
                         Please fill out this field.
