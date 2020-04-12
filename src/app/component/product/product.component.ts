@@ -104,4 +104,36 @@ export class ProductComponent implements OnInit {
     this.flagSearch ? this.searchProductsList(this.formSearch.value) : 
     this.searchProductsList(this.formSearchNull)
   }
+
+  deleteProduct(product) {
+
+    // Product delete
+    const productDelete = {
+      "productId": product.productId, "productName": product.productName, "quantity": product.quantity,
+      "price": product.price, "brandEntity": product.brandEntity, "saleDate": new Date(product.saleDate),
+      "image": product.image, "description": product.description
+    }
+
+    // Open dialog
+    let dialogRef = this.dialog.open(DialogDeleteComponent, {
+      data: product
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != null) {
+
+        // Function delete product
+        this.service.deleteProduct(productDelete)
+          .subscribe(resp => {
+            this.snackBar.getSnackBarSuccess(resp['message'])
+
+            // Refresh data table
+            this.ngOnInit();
+          },
+            // If server error
+            error => {
+              this.snackBar.getSnackBarFail(messageServerError)
+            })
+      }
+    })
+  }
 }

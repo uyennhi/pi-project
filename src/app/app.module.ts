@@ -22,13 +22,18 @@ import { BrandService } from './service/brand.service';
 import { ProductComponent } from './component/product/product.component';
 import { DialogDeleteComponent } from './component/common/dialog-delete/dialog-delete.component';
 
+import { EditBrandComponent } from './component/brand/dialog/edit-brand/edit-brand.component';
+import { AddBrandComponent } from './component/brand/dialog/add-brand/add-brand.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     NavBarComponent,
     BrandComponent,
     ProductComponent,
-    DialogDeleteComponent
+    DialogDeleteComponent,
+    EditBrandComponent,
+    AddBrandComponent
 
   ],
   imports: [

@@ -11,6 +11,7 @@ import {MatButton} from '@angular/material/button';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { SnackBarService } from 'src/app/component/common/snack-bar/snack-bar.service';
 import { DialogDeleteComponent } from '../common/dialog-delete/dialog-delete.component';
+import { AddBrandComponent } from './dialog/add-brand/add-brand.component';
 
 @Component({
   selector: 'app-brand',
@@ -81,6 +82,22 @@ export class BrandComponent implements OnInit {
     this.currentPage = currentPage;
     this.flagSearch ? this.searchBrandsList(this.nameSearcher) :
     this.searchBrandsList('');
+  }
+  //add-brand
+  insertBrand() {
+
+    // Open dialog
+    let dialogRef = this.dialog.open(AddBrandComponent, {
+      maxHeight: '95vh'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != null) {
+        this.snackBar.getSnackBarSuccess(result)
+
+        // Refresh data table
+        this.ngOnInit();
+      }
+    })
   }
 
 
