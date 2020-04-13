@@ -12,6 +12,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 import { SnackBarService } from 'src/app/component/common/snack-bar/snack-bar.service';
 import { DialogDeleteComponent } from '../common/dialog-delete/dialog-delete.component';
 import { AddBrandComponent } from './dialog/add-brand/add-brand.component';
+import { EditBrandComponent } from './dialog/edit-brand/edit-brand.component';
 
 @Component({
   selector: 'app-brand',
@@ -99,7 +100,23 @@ export class BrandComponent implements OnInit {
       }
     })
   }
+//update brand
+updateBrand(brand) {
 
+  // Open dialog
+  let dialogRef = this.dialog.open(EditBrandComponent, {
+    data: brand,
+    maxHeight: '95vh'
+  })
+  dialogRef.afterClosed().subscribe(result => {
+    if (result != null) {
+      this.snackBar.getSnackBarSuccess(result)
+
+      // Refresh data table
+      this.ngOnInit();
+    }
+  })
+}
 
   //delete brand
   deleteBrand(brand) {

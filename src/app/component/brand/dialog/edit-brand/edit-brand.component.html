@@ -1,1 +1,57 @@
-<p>edit-brand works!</p>
+<div class="form-edit">
+    <!-- Dialog header -->
+    <h2 mat-dialog-title>Edit Brand</h2>
+    <form [formGroup]="formEdit">
+        <div class="row">
+            <div class="col">
+                <!-- Dialog content -->
+                <mat-dialog-content>
+                    <!-- Field brand id -->
+                    <div class="form-group">
+                        <label>Brand ID</label>
+                        <input type="text" class="form-control" placeholder="Enter brand name" formControlName="brandId" disabled>
+                    </div>
+
+                    <!-- Field brand name -->
+                    <div class="form-group">
+                        <label>Brand name <small style="color: red">(*)</small></label>
+                        <input type="text" class="form-control" placeholder="Enter brand name" formControlName="brandName" (keyup)="checkDuplicatedBrandName(brandNameChecker)" [(ngModel)]="brandNameChecker">
+                        <small class="required" *ngIf="flagDuplicatedbrandName">
+                        Duplicated brand name.
+                    </small>
+                        <small class="required" *ngIf="formEdit.get('brandName').errors?.required">
+                        Please fill out this field.
+                    </small>
+                    </div>
+
+                    <!-- Field description -->
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea class="form-control" rows="3" placeholder="Enter description" formControlName="description">
+                    </textarea>
+                    </div>
+
+                    <!-- Field image -->
+                    <div class="form-group">
+                        <label>Logo <small style="color: red">(*)</small></label><br>
+                        <input type="file" name="myFile" accept="image/*" (change)="changeLogo(formEdit.value.logo)" formControlName="logo"><br>
+                        <small class="required" *ngIf="!flagImageFile">
+                        You must select a image file.
+                    </small>
+                        <div class="show-logo">
+                            <img src="../../../../assets/logo/{{ logoName }}" class="logo" *ngIf="flagShowLogo">
+                        </div>
+                    </div>
+                    <i class="tip">(*): Fields cannot be empty.</i>
+                </mat-dialog-content>
+            </div>
+        </div>
+        <!-- Dialog footer -->
+        <mat-dialog-actions align="end">
+            <button type="submit" class="save btn btn-primary" (click)=updateBrand(formEdit.value)>
+                Save
+            </button>
+            <button class="reset btn btn-secondary" (click)=closeDialog()>Cancel</button>
+        </mat-dialog-actions>
+    </form>
+</div>
