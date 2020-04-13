@@ -3,13 +3,13 @@
 
 <!-- Search brand -->
 <div class="button-search">
-    <button type="submit" class="btn btn-primary" >
+    <button type="submit" class="btn btn-primary" (click)="searchBrandsList(nameSearcher)">
         Search
     </button>
 </div>
 <div class="name-search">
     <div class="form-group">
-        <input type="text" id="inputState" class="form-control" placeholder="Brand name" >
+        <input type="text" id="inputState" class="form-control" placeholder="Brand name" [(ngModel)]="nameSearcher">
     </div>
 </div>
 
