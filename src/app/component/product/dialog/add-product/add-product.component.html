@@ -1,0 +1,101 @@
+<!-- Dialog header -->
+<h2 mat-dialog-title>Add Product</h2>
+<form [formGroup]="formEdit" class="normal-form">
+    <!-- Dialog content -->
+    <mat-dialog-content>
+        <div class="row">
+            <div class="col-sm-6">
+
+                <!-- Field product name -->
+                <div class="form-group">
+                    <label>Product name <small style="color: red">(*)</small></label>
+                    <input type="text" class="form-control" placeholder="Enter product name" formControlName="productName" (keyup)="checkDuplicatedProductName(productNameChecker)" [(ngModel)]="productNameChecker">
+                    <small class="required" *ngIf="flagDuplicatedProductName">
+                    Duplicated product name.
+                </small>
+                    <small class="required" *ngIf="formEdit.get('productName').errors?.required && flagRequired">
+                    Please fill out this field.
+                </small>
+                </div>
+
+                <!-- Field quantity -->
+                <div class="form-group">
+                    <label>Quantity <small style="color: red">(*)</small></label>
+                    <input type="number" class="form-control" placeholder="Enter quantity" formControlName="quantity">
+                    <small class="required" *ngIf="formEdit.get('quantity').errors?.quantityValidator">
+                    Incorrect quantity.
+                </small>
+                    <small class="required" *ngIf="formEdit.get('quantity').errors?.required && flagRequired">
+                    Please fill out this field.
+                </small>
+                </div>
+
+                <!-- Field price -->
+                <div class="form-group">
+                    <label>Price <small style="color: red">(*)</small></label>
+                    <input type="number" class="form-control" placeholder="Enter price" formControlName="price" required>
+                    <small class="required" *ngIf="formEdit.get('price').errors?.priceValidator">
+                    Incorrect price.
+                </small>
+                    <small class="required" *ngIf="formEdit.get('price').errors?.required && flagRequired">
+                    Please fill out this field.
+                </small>
+                </div>
+
+                <!-- Field brand name -->
+                <div class="form-group">
+                    <label>Brand name <small style="color: red">(*)</small></label>
+                    <select class="form-control" [(ngModel)]="brandNameDefault" formControlName="brandName">
+                    <option *ngFor="let name of brandNamesList" [value]="name">
+                        {{name}}
+                    </option>
+                </select>
+                </div>
+
+                <!-- Field date sale -->
+                <div class="form-group">
+                    <label>Date sale <small style="color: red">(*)</small></label>
+                    <input type="date" class="form-control" formControlName="saleDate">
+                    <small class="required" *ngIf="formEdit.get('saleDate').errors?.required && flagRequired">
+                    Please fill out this field.
+                </small>
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <!-- Field description -->
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea class="form-control" rows="3" placeholder="Enter description" formControlName="description">
+                </textarea>
+                </div>
+
+                <!-- Field image -->
+                <div class="form-group">
+                    <label>Image <small style="color: red">(*)</small></label><br>
+                    <input type="file" name="myFile" accept="image/*" (change)="changeImage(formEdit.value.image)" formControlName="image"><br>
+                    <small class="required" *ngIf="!flagImageFile">
+                    You must select a image file.
+                </small>
+                    <small class="required" *ngIf="formEdit.get('image').errors?.required && flagRequired">
+                    Please fill out this field.
+                </small>
+                    <div class="show-logo">
+                        <img src="../../../../assets/image/{{ imageName }}" class="logo" *ngIf="flagShowImage">
+                    </div>
+                </div>
+                <i class="tip">(*): Fields cannot be empty.</i>
+            </div>
+        </div>
+    </mat-dialog-content>
+
+    <!-- Dialog footer -->
+    <mat-dialog-actions align="end">
+        <div class="bt-action">
+            <button type="submit" (click)="insertProduct(formEdit.value)" class="save btn btn-primary">
+                Save
+            </button>
+            <button (click)="closeDialog()" class="reset btn btn-secondary">Cancel</button>
+        </div>
+    </mat-dialog-actions>
+</form>
