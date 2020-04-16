@@ -13,6 +13,8 @@ import { SnackBarService } from '../common/snack-bar/snack-bar.service';
 import { DialogDeleteComponent } from '../common/dialog-delete/dialog-delete.component';
 import { messageServerError } from '../common/constrains';
 import { isUnablePrice } from '../common/validation/validators';
+import { AddProductComponent } from './dialog/add-product/add-product.component';
+import { EditProductComponent } from './dialog/edit-product/edit-product.component';
 
 @Component({
   selector: 'app-product',
@@ -103,6 +105,44 @@ export class ProductComponent implements OnInit {
     this.currentPage = currentPage;
     this.flagSearch ? this.searchProductsList(this.formSearch.value) : 
     this.searchProductsList(this.formSearchNull)
+  }
+
+  insertProduct() {
+
+    // Open dialog
+    let dialogRef = this.dialog.open(AddProductComponent, {
+      maxHeight: '95vh'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != null) {
+        this.snackBar.getSnackBarSuccess(result)
+
+        // Refresh data table
+        this.ngOnInit()
+      }
+    })
+  }
+
+  /**
+   * Update product
+   * 
+   * 
+   */
+  updateProduct(product) {
+
+    // Open dialog
+    let dialogRef = this.dialog.open(EditProductComponent, {
+      data: product,
+      maxHeight: '95vh'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != null) {
+        this.snackBar.getSnackBarSuccess(result);
+
+        // Refresh data table
+        this.ngOnInit();
+      }
+    })
   }
 
   deleteProduct(product) {
