@@ -25,6 +25,13 @@ export class AddProductComponent implements OnInit {
   imageName = '';
   brandNameDefault = 'Apple';
 
+  //upload image
+  imageName1 : string;
+  parts : string[];
+  selectedFile : FileList;
+  currentFileUpload : File;
+
+
   constructor(
     public dialogRef: MatDialogRef<AddProductComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -86,6 +93,17 @@ export class AddProductComponent implements OnInit {
     }
   }
 
+  onFileSelect(event) {
+    console.log(event.target.files[0]['name']);
+    let r = Math.random().toString(36).substring(7);
+    this.imageName1 = event.target.files[0]['name'];
+    this.parts = this.imageName1.split('.');
+    this.imageName1 = this.parts[0]+"-"+ r+"."+this.parts[1];
+    this.selectedFile = event.target.files;
+    console.log(this.imageName1);
+
+  }
+
   /**
    * Insert product
    * 
@@ -94,17 +112,17 @@ export class AddProductComponent implements OnInit {
   insertProduct(form) {
 
     // Form validation
-    if (isFormProductInvalid(form, this.flagImageFile, this.imageName)) {
-      this.flagRequired = true;
-      return false;
-    }
-
+   // if (isFormProductInvalid(form, this.flagImageFile, this.imageName)) {
+   //   this.flagRequired = true;
+    //  return false;
+   // }
+   form.image = this.imageName1;
     // Get the brand for the form insert
     this.brandService.findBrandByName(form.brandName)
       .subscribe(brand => {
         // Set values for the form
         form.saleDate = new Date(form.saleDate);
-        form.image = this.imageName;
+        form.image = this.imageName1;
         form.brandEntity = brand;
 
         // Function insert product
@@ -116,7 +134,10 @@ export class AddProductComponent implements OnInit {
         // If server error
         error => {
           this.snackBar.getSnackBarFail(messageServerError);
-        })
+        });
+        this.currentFileUpload = this.selectedFile.item(0);
+        this.brandService.pushFileToStoRage(this.currentFileUpload,this.imageName1).subscribe();
+        console.log(form.value);
   }
   
   /**

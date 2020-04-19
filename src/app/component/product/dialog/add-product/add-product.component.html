@@ -73,7 +73,7 @@
                 <!-- Field image -->
                 <div class="form-group">
                     <label>Image <small style="color: red">(*)</small></label><br>
-                    <input type="file" name="myFile" accept="image/*" (change)="changeImage(formEdit.value.image)" formControlName="image"><br>
+                    <input type="file" name="myFile" accept="image/*" (change)="onFileSelect($event)" formControlName="image"><br>
                     <small class="required" *ngIf="!flagImageFile">
                     You must select a image file.
                 </small>
