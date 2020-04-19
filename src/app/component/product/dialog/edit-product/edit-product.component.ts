@@ -39,7 +39,7 @@ export class EditProductComponent implements OnInit {
     // Reactive form edit product
     this.formEdit = this.fb.group({
       productId: this.data.productId,
-      productName: ['', Validators.required],
+      productName: [this.data.productName, Validators.required],
       quantity: [this.data.quantity, [Validators.required, quantityValidator]],
       price: [this.data.price, [Validators.required, priceValidator]],
       brandName: '',

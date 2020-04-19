@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
 import { brand } from '../component/model/brand.model';
 import { serverUrl } from '../component/common/constrains';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -64,5 +65,17 @@ export class BrandService {
   deleteBrand(body) {
     const url = serverUrl + 'brand/admin/delete-brand';
     return this.http.post(url, body);
+  }
+
+  pushFileToStoRage(file :File, logoName : string) : Observable<HttpEvent<{}>> {
+    const data : FormData =  new FormData();
+    data.append('file',file);
+    data.append('logoName',logoName);
+    const newRequest = new HttpRequest('POST', serverUrl+'brand/upload', data, {
+      reportProgress: true,
+      responseType : 'text'
+    });
+    return this.http.request(newRequest);
+
   }
 }

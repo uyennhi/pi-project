@@ -23,6 +23,13 @@ export class AddBrandComponent implements OnInit {
   flagDuplicatedbrandName = false;
   flagRequired = false;
 
+  //upload image
+  imageName : string;
+  parts : string[];
+  selectedFile : FileList;
+  currentFileUpload : File;
+
+
   constructor(
     public dialogRef: MatDialogRef<AddBrandComponent>,
     private fb: FormBuilder,
@@ -71,6 +78,17 @@ export class AddBrandComponent implements OnInit {
     }
   }
 
+  onFileSelect(event) {
+    console.log(event.target.files[0]['name']);
+    let r = Math.random().toString(36).substring(7);
+    this.imageName = event.target.files[0]['name'];
+    this.parts = this.imageName.split('.');
+    this.imageName = this.parts[0]+"-"+ r+"."+this.parts[1];
+    this.selectedFile = event.target.files;
+    console.log(this.imageName);
+
+  }
+
   /**
    * Insert brand
    * 
@@ -79,13 +97,13 @@ export class AddBrandComponent implements OnInit {
   insertBrand(form) {
 
     // Set value logo name
-    form.logo = this.logoName;
+    form.logo = this.imageName;
 
     // Form validation
-    if (isFormBrandInvalid(form, this.logoName, this.flagImageFile)) {
-      this.flagRequired = true;
-      return false;
-    }
+   // if (isFormBrandInvalid(form, this.logoName, this.flagImageFile)) {
+    //  this.flagRequired = true;
+   //   return false;
+   // }
 
     // Function insert brand
     this.brandService.insertBrand(form)
@@ -95,7 +113,11 @@ export class AddBrandComponent implements OnInit {
         // If server error
         error => {
           this.snackBar.getSnackBarFail(messageServerError)
-        })
+        });
+        this.currentFileUpload = this.selectedFile.item(0);
+        this.brandService.pushFileToStoRage(this.currentFileUpload,this.imageName).subscribe();
+        console.log(form.value);
+      
   }
 
   /**

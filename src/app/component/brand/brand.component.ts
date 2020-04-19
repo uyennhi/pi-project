@@ -50,6 +50,7 @@ export class BrandComponent implements OnInit {
   ngOnInit(): void {
     this.searchBrandsList('');
       this.flagAction = true ;
+      
   }
   receiveEvent() {
     this.ngOnInit();
@@ -77,6 +78,7 @@ export class BrandComponent implements OnInit {
     if (brandName != '') {
       this.flagSearch = true;
     }
+    console.log(JSON.stringify(this.brandsList, null, "  "));
   }
 
   setPageChange(currentPage: any) {

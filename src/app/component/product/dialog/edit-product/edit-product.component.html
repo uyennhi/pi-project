@@ -8,13 +8,13 @@
                 <!-- Field product id -->
                 <div class="form-group">
                     <label>Product ID</label>
-                    <input type="text" class="form-control" formControlName="productId" disabled>
+                    <input type="text" class="form-control" formControlName="productId" [attr.disabled]="true">
                 </div>
 
                 <!-- Field product name -->
                 <div class="form-group">
                     <label>Product name <small style="color: red">(*)</small></label>
-                    <input type="text" class="form-control" placeholder="Enter product name" formControlName="productName" (keyup)="checkDuplicatedProductName(productNameChecker)" [(ngModel)]="productNameChecker">
+                    <input type="text" class="form-control" placeholder="Enter product name" formControlName="productName" (keyup)="checkDuplicatedProductName(this.formEdit.get('productName').value)" >
                     <small class="required" *ngIf="flagDuplicatedProductName">
                     Duplicated product name.
                 </small>
